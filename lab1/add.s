@@ -16,7 +16,8 @@ add_nums:
     # copy number1 to result buffer
     mov %esi, %ecx
     add %edi, %ecx
-
+    
+    # preserve ECX and EDI values on the stack
     push %ecx
     push %edi
 
@@ -31,6 +32,8 @@ add_nums:
         jne loop0
 
     # add number2 to the result buffer
+
+    # get previously stored ECX and EDI values from the stack
     pop %edi
     pop %ecx
 
@@ -38,9 +41,10 @@ add_nums:
 
     pushf
 
+    # store result buffer address in ESI register
+    movl $result, %esi
     loop1:
         movl (%edx, %edi, 4), %eax
-        movl $result, %esi
         popf
         adcl %eax, -4(%esi, %ecx, 4)
         pushf
@@ -50,12 +54,8 @@ add_nums:
         cmp $0, %edi
         jne loop1
 
+    # add a carry bit at the end
     popf
-    jc add_last_carry_bit
+    adcl $0, -4(%esi, %ecx, 4)
 
     ret
-
-    add_last_carry_bit:
-        mov $result, %eax
-        addl $1, (%eax, %ecx, 4)
-        ret
