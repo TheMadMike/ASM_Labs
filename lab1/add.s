@@ -21,15 +21,9 @@ add_nums:
     push %ecx
     push %edi
 
-    loop0:
-        movl (%ebx, %esi, 4), %eax
-        movl $result, %edi  
-        movl %eax, -4(%edi, %ecx, 4)
-        
-        dec %ecx
-        dec %esi
-        cmp $0, %esi
-        jne loop0
+    push %ecx
+    push %ebx
+    call copy_to_result_buffer
 
     # add number2 to the result buffer
 

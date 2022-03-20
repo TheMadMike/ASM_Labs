@@ -42,4 +42,5 @@ exit_success:
     mov $EXIT_SUCCESS, %ebx
     int $0x80
 
+.include "util.s"
 .include "add.s"
