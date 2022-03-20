@@ -1,5 +1,6 @@
-# number1 + number2 (nb/u2)
-add_nums:
+
+# number1 - number2 (nb)
+sub_nb:
     pop %eax # get return address
     pop %ebx # get number1 address
     pop %edx # get number2 address
@@ -22,7 +23,7 @@ add_nums:
     push %ebx
     call copy_to_result_buffer
 
-    # add number2 to the result buffer
+    # subtract number2 from the result buffer
 
     # get previously stored ECX and EDI values from the stack
     pop %edi
@@ -34,19 +35,19 @@ add_nums:
 
     # store result buffer address in ESI register
     movl $result, %esi
-    loop1:
+    loop2:
         movl (%edx, %edi, 4), %eax
         popf
-        adcl %eax, -4(%esi, %ecx, 4)
+        sbbl %eax, -4(%esi, %ecx, 4)
         pushf
     
         dec %ecx
         dec %edi
         cmp $0, %edi
-        jne loop1
+        jne loop2
 
-    # add a carry bit at the end
+    # subtract a borrow bit at the end
     popf
-    adcl $0, -4(%esi, %ecx, 4)
+    sbbl $0, -4(%esi, %ecx, 4)
 
     ret

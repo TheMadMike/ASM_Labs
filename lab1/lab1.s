@@ -30,10 +30,14 @@ result:
 
 .global _start
 _start:
-    
+
     push $number2
     push $number1
     call add_nums
+    
+    push $number2
+    push $number1
+    call sub_nb
 
     jmp exit_success
 
@@ -42,5 +46,9 @@ exit_success:
     mov $EXIT_SUCCESS, %ebx
     int $0x80
 
+# nb = natural binary code
+# u2 = two's complement
+
 .include "util.s"
 .include "add.s"
+.include "sub.s"

@@ -18,6 +18,3 @@ copy_to_result_buffer:
         jne loop0
     
     ret
-
-convert_to_negative_u2:
-    
