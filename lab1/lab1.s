@@ -30,11 +30,17 @@ result:
 
 .global _start
 _start:
+    # multiplication (nb)
+    push $number2
+    push $number1
+    call mul_nums_nb
 
+    # addition (nb/u2)
     push $number2
     push $number1
     call add_nums
     
+    # subtraction (nb)
     push $number2
     push $number1
     call sub_nb
@@ -52,3 +58,4 @@ exit_success:
 .include "util.s"
 .include "add.s"
 .include "sub.s"
+.include "mul.s"
